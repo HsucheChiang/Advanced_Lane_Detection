@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.5.1)
+project(laneDetection)
+include_directories(${CMAKE_SOURCE_DIR})
+find_package(OpenCV REQUIRED)
+add_executable(laneDetection main.cpp calibration.cpp laneDetection.cpp)
+target_link_libraries(laneDetection ${OpenCV_LIBS})

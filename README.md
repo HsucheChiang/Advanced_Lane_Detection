@@ -1,1 +1,30 @@
-# Advanced_Lane_Detection
+# Advanced Lane Detection
+>This project is to implement the lane detection algorithm by using C++ language, since many of them are implemented on Python.
+
+***
+##Required Libraries and Tools
+####1. CMake ( version 3.5.1 or later )
+####2. OpenCV ( version 3.4.1 or later ) 
+####3. Eigen ( version 3.3.4 or later )
+
+***
+##Installation
+####The following building code and installation procedures are for Linux platform only.  
+1. Please make sure your current working directories is under the program's root folder.
+2. mkdir build
+3. cd build
+4. cmake ..
+5. make
+6. make install
+7. Finally, the program will be installed under the LaneDetection folder.
+8. ./laneDetection project_video.mp4
+
+***
+##Demo
+[Video1](https://youtu.be/mP4fvnvR0U8)  
+[Video2](https://youtu.be/Ig0B8KG5qYU)  
+
+
+
+
+
