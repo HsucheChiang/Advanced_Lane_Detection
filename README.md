@@ -27,6 +27,12 @@
 [Video2](https://youtu.be/Ig0B8KG5qYU)  
 ![Debug Screen](https://github.com/HsucheChiang/Advanced_Lane_Detection/blob/master/Screenshot.png)
 
+***
+## Future Works
+1. To improve the curve fitting algorithm instead of by just simply using least squrare method to reduce execution time, such that the system can be run in embedded system.  
+
+2. Apply deep learning model to distinguish lane marks from others to make it more precies and robust.
+
 
 
 
