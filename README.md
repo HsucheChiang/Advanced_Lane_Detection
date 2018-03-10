@@ -3,7 +3,7 @@
 
 ***
 
-##  Required Libraries and Tools
+##  Dependencies
 #### 1. CMake ( version 3.5.1 or later )  
 #### 2. OpenCV ( version 3.4.1 or later )  
 #### 3. Eigen ( version 3.3.4 or later )  
