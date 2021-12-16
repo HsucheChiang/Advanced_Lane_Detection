@@ -32,14 +32,17 @@ int main(int argc, char **argv)
 
 
     //Load the video.
-//	if(argc < 2)
-//	{
-//		cerr << "There is no input video." << endl;
-//		return -1;
-//	}
+    //	if(argc < 2)
+    //	{
+    //		cerr << "There is no input video." << endl;
+    //		return -1;
+    //	}
 
-    //laneVideo.open(argv[1]); //Load the video.
-    laneVideo.open("/home/bryan/SGU/ALD/Advanced_Lane_Detection/video/project_video.mp4");
+    //laneVideo.open(argv[1]); //Load the video
+	
+    //change this with your video directory
+    laneVideo.open("/home/user/Advanced_Lane_Detection/video/project_video.mp4");
+	
 	if(!laneVideo.isOpened())
 	{
 		cerr << "Could not open the video." << endl;
