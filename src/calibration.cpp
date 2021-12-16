@@ -50,7 +50,7 @@ void CameraCalibrator::addPoints()
 
 	for(int i=0; i<m_filenames.size(); i++)
 	{
-		image = imread(m_filenames[i], CV_LOAD_IMAGE_GRAYSCALE);
+        image = imread(m_filenames[i], IMREAD_GRAYSCALE);
 		m_imageSize = image.size();
 		findChessboardCorners(image, Size(9,6), chessboardCorner);
 		if(chessboardCorner.size() == 54)

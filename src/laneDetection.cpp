@@ -34,7 +34,7 @@ void laneDetection::laneDetctAlgo()
 
     //Merge the binarized R channel image with edge detected image.
     add(warpEdgeImage, RedBinary, mergeImage);
-    cvtColor(mergeImage, mergeImageRGB, CV_GRAY2RGB);
+    cvtColor(mergeImage, mergeImageRGB, COLOR_GRAY2RGB);
 
     //Calculate the histogram.
     calHist();
@@ -282,7 +282,7 @@ bool laneDetection::laneCoefEstimate()
     }
     else
     {
-        cerr < "[Lane Detection Algo] There is no enough detected road marks.";
+       // cerr < "[Lane Detection Algo] There is no enough detected road marks.";
         failDetectFlag = true;
         return false;
     }
@@ -318,10 +318,10 @@ void laneDetection::laneFitting()
     }
     Mat curveL(curvePointsL, true);
     curveL.convertTo(curveL, CV_32S);
-    polylines(maskImage, curveL, false, Scalar(255,0,0), 20, CV_AA);
+    polylines(maskImage, curveL, false, Scalar(255,0,0), 20, LINE_AA);
     Mat curveR(curvePointsR, true);
     curveR.convertTo(curveR, CV_32S);
-    polylines(maskImage, curveR, false, Scalar(0,0,255), 20, CV_AA);
+    polylines(maskImage, curveR, false, Scalar(0,0,255), 20, LINE_AA);
 
     uchar* matPtr;
     for(int i=0; i<maskImage.size().height; i++)

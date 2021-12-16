@@ -32,13 +32,17 @@ int main(int argc, char **argv)
 
 
     //Load the video.
-	if(argc < 2)
-	{
-		cerr << "There is no input video." << endl;
-		return -1;
-	}
+    //	if(argc < 2)
+    //	{
+    //		cerr << "There is no input video." << endl;
+    //		return -1;
+    //	}
 
-	laneVideo.open(argv[1]); //Load the video.
+    //laneVideo.open(argv[1]); //Load the video
+	
+    //change this with your video directory
+    laneVideo.open("/home/user/Advanced_Lane_Detection/video/project_video.mp4");
+	
 	if(!laneVideo.isOpened())
 	{
 		cerr << "Could not open the video." << endl;
@@ -78,7 +82,7 @@ int main(int argc, char **argv)
     //Display Video Image
 	laneVideo.set(CAP_PROP_POS_FRAMES, 0);
 	laneVideo >> videoFrame;
-    namedWindow("Original Image", CV_WINDOW_NORMAL);
+    namedWindow("Original Image", WINDOW_NORMAL);
     imshow("Original Image",videoFrame);
     undistort(videoFrame, videoFrameUndistorted, cameraMatrix, dist);
     _videoFrameUndistorted = videoFrameUndistorted.clone();
@@ -89,12 +93,12 @@ int main(int argc, char **argv)
     line(videoFrameUndistorted, perspectiveSrc[1], perspectiveSrc[3], Scalar(0,0,255), 2);
     line(videoFrameUndistorted, perspectiveSrc[3], perspectiveSrc[2], Scalar(0,0,255), 2);
     line(videoFrameUndistorted, perspectiveSrc[2], perspectiveSrc[0], Scalar(0,0,255), 2);
-    circle(videoFrameUndistorted, perspectiveSrc[0], 6, Scalar(0,0,255), CV_FILLED);
-    circle(videoFrameUndistorted, perspectiveSrc[1], 6, Scalar(0,0,255), CV_FILLED);
-    circle(videoFrameUndistorted, perspectiveSrc[2], 6, Scalar(0,0,255), CV_FILLED);
-    circle(videoFrameUndistorted, perspectiveSrc[3], 6, Scalar(0,0,255), CV_FILLED);
+    circle(videoFrameUndistorted, perspectiveSrc[0], 6, Scalar(0,0,255), FILLED);
+    circle(videoFrameUndistorted, perspectiveSrc[1], 6, Scalar(0,0,255), FILLED);
+    circle(videoFrameUndistorted, perspectiveSrc[2], 6, Scalar(0,0,255), FILLED);
+    circle(videoFrameUndistorted, perspectiveSrc[3], 6, Scalar(0,0,255), FILLED);
 
-    int sliderMaxValue = laneVideo.get(CV_CAP_PROP_FRAME_COUNT) - 10;
+    int sliderMaxValue = laneVideo.get(CAP_PROP_FRAME_COUNT) - 10;
     createTrackbar("Frame", "Original Image", &sliderValue, sliderMaxValue, videoSliderCallback);
 	videoSliderCallback(sliderValue, 0);
 
@@ -146,21 +150,21 @@ int main(int argc, char **argv)
     //Show the red channel
     debugWindowROI = debugWindow(Rect(0, 180, 320, 180));
     resize(imageRedChannel, resizePic, Size(320,180));
-    cvtColor(resizePic, resizePic, CV_GRAY2BGR);
+    cvtColor(resizePic, resizePic, COLOR_GRAY2BGR);
     debugWindowROI = Scalar(0, 0, 0);
     addWeighted(debugWindowROI, 0, resizePic, 1, 0, debugWindowROI);
 
     //Show the canny edge detection result
     debugWindowROI = debugWindow(Rect(320, 180, 320, 180));
     resize(warpEdge, resizePic, Size(320,180));
-    cvtColor(resizePic, resizePic, CV_GRAY2BGR);
+    cvtColor(resizePic, resizePic, COLOR_GRAY2BGR);
     debugWindowROI = Scalar(0, 0, 0);
     addWeighted(debugWindowROI, 0, resizePic, 1, 0, debugWindowROI);
 
     //Show the thresholding red channel image
     debugWindowROI = debugWindow(Rect(640, 180, 320, 180));
     resize(redBinary, resizePic, Size(320,180));
-    cvtColor(resizePic, resizePic, CV_GRAY2BGR);
+    cvtColor(resizePic, resizePic, COLOR_GRAY2BGR);
     debugWindowROI = Scalar(0, 0, 0);
     addWeighted(debugWindowROI, 0, resizePic, 1, 0, debugWindowROI);
 
@@ -201,14 +205,14 @@ int main(int argc, char **argv)
     line(debugWindow,Point2f(0,180),Point2f(1279,180),Scalar(0,150,255),1.8);
     line(debugWindow,Point2f(0,360),Point2f(1279,360),Scalar(0,150,255),1.8);
 
-    namedWindow("DEBUG", CV_WINDOW_AUTOSIZE);
+    namedWindow("DEBUG", WINDOW_AUTOSIZE);
     imshow("DEBUG", debugWindow);
 
 
     //===========Start Real Time Processing===========
     float laneDistant = 0;
     stringstream ss;
-    namedWindow("Real Time Execution", CV_WINDOW_NORMAL);
+    namedWindow("Real Time Execution", WINDOW_NORMAL);
     laneVideo.set(CAP_PROP_POS_FRAMES, 0);
     laneVideo >> videoFrame;
     Mat showVideos(videoFrame.size().height*2, videoFrame.size().width * 2, CV_8UC3, Scalar(0,0,0));
@@ -217,9 +221,9 @@ int main(int argc, char **argv)
     _videoFrameUndistorted = videoFrameUndistorted.clone();
 
     VideoWriter writer;
-    writer.open("Results.avi", CV_FOURCC('M', 'J', 'P', 'G'), 30, videoSize);
+    writer.open("Results.avi", VideoWriter::fourcc('M', 'J', 'P', 'G'), 30, videoSize);
     VideoWriter writer2;
-    writer2.open("DEBUG.avi", CV_FOURCC('M', 'J', 'P', 'G'), 30, showVideos.size());
+    writer2.open("DEBUG.avi", VideoWriter::fourcc('M', 'J', 'P', 'G'), 30, showVideos.size());
 
 
     while(!videoFrame.empty())
@@ -300,10 +304,10 @@ void videoSliderCallback(int, void*)
     line(videoFrameUndistorted, perspectiveSrc[1], perspectiveSrc[3], Scalar(0,0,255), 2);
     line(videoFrameUndistorted, perspectiveSrc[3], perspectiveSrc[2], Scalar(0,0,255), 2);
     line(videoFrameUndistorted, perspectiveSrc[2], perspectiveSrc[0], Scalar(0,0,255), 2);
-    circle(videoFrameUndistorted, perspectiveSrc[0], 6, Scalar(0,0,255), CV_FILLED);
-    circle(videoFrameUndistorted, perspectiveSrc[1], 6, Scalar(0,0,255), CV_FILLED);
-    circle(videoFrameUndistorted, perspectiveSrc[2], 6, Scalar(0,0,255), CV_FILLED);
-    circle(videoFrameUndistorted, perspectiveSrc[3], 6, Scalar(0,0,255), CV_FILLED);
+    circle(videoFrameUndistorted, perspectiveSrc[0], 6, Scalar(0,0,255), FILLED);
+    circle(videoFrameUndistorted, perspectiveSrc[1], 6, Scalar(0,0,255), FILLED);
+    circle(videoFrameUndistorted, perspectiveSrc[2], 6, Scalar(0,0,255), FILLED);
+    circle(videoFrameUndistorted, perspectiveSrc[3], 6, Scalar(0,0,255), FILLED);
 
     //To warp the image.
     warpPerspective(_videoFrameUndistorted, videoFramePerspective, perspectiveMatrix, videoSize);
@@ -340,21 +344,21 @@ void videoSliderCallback(int, void*)
     //Show the red channel
     debugWindowROI = debugWindow(Rect(0, 180, 320, 180));
     resize(imageRedChannel, resizePic, Size(320,180));
-    cvtColor(resizePic, resizePic, CV_GRAY2BGR);
+    cvtColor(resizePic, resizePic, COLOR_GRAY2BGR);
     debugWindowROI = Scalar(0, 0, 0);
     addWeighted(debugWindowROI, 0, resizePic, 1, 0, debugWindowROI);
 
     //Show the canny edge detection result
     debugWindowROI = debugWindow(Rect(320, 180, 320, 180));
     resize(warpEdge, resizePic, Size(320,180));
-    cvtColor(resizePic, resizePic, CV_GRAY2BGR);
+    cvtColor(resizePic, resizePic, COLOR_GRAY2BGR);
     debugWindowROI = Scalar(0, 0, 0);
     addWeighted(debugWindowROI, 0, resizePic, 1, 0, debugWindowROI);
 
     //Show the thresholding red channel image
     debugWindowROI = debugWindow(Rect(640, 180, 320, 180));
     resize(redBinary, resizePic, Size(320,180));
-    cvtColor(resizePic, resizePic, CV_GRAY2BGR);
+    cvtColor(resizePic, resizePic, COLOR_GRAY2BGR);
     debugWindowROI = Scalar(0, 0, 0);
     addWeighted(debugWindowROI, 0, resizePic, 1, 0, debugWindowROI);
 
@@ -395,7 +399,7 @@ void videoSliderCallback(int, void*)
     line(debugWindow,Point2f(0,180),Point2f(1279,180),Scalar(0,150,255),1.8);
     line(debugWindow,Point2f(0,360),Point2f(1279,360),Scalar(0,150,255),1.8);
 
-    namedWindow("DEBUG", CV_WINDOW_AUTOSIZE);
+    namedWindow("DEBUG", WINDOW_AUTOSIZE);
     imshow("DEBUG", debugWindow);
 
 
